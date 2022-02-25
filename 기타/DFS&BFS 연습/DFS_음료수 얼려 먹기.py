@@ -32,3 +32,35 @@ for i in range(N):
             result += 1
 
 print(result)   # 정답 출력
+
+
+# 다른 풀이
+# import sys
+#
+# N, M = map(int, sys.stdin.readline().rstrip().split())
+#
+# ice = [list(map(int, sys.stdin.readline().rstrip())) for _ in range(N)]
+#
+# def icecreamCheck(x, y):
+#     ice[x][y] = 1
+#     if y+1 < M and ice[x][y+1] != 1:
+#         icecreamCheck(x, y+1)
+#
+#     if x+1 < N and ice[x+1][y] != 1:
+#         icecreamCheck(x+1, y)
+#
+#     if y-1 > 0 and ice[x][y-1] != 1:
+#         icecreamCheck(x, y-1)
+#
+#     if x-1 > 0 and ice[x-1][y] != 1:
+#         icecreamCheck(x-1, y)
+#
+#
+# cnt = 0
+# for i in range(N):
+#     for j in range(M):
+#         if ice[i][j] == 0:
+#             cnt += 1
+#             icecreamCheck(i, j)
+#
+# print(cnt)
