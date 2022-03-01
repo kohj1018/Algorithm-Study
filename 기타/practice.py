@@ -1,34 +1,42 @@
 import sys
 from collections import deque
 
-N, M = map(int, sys.stdin.readline().rstrip().split())
+N, M, V = map(int, sys.stdin.readline().rstrip().split())
 
-miro = [list(map(int, sys.stdin.readline().rstrip())) for _ in range(N)]
+graph = [[0] * (N + 1) for _ in range(N + 1)]
+DFS_visited = [False] * (N + 1)
+BFS_visited = [False] * (N + 1)
 
-def bfs(x, y):
+for _ in range(M):
+    x, y = map(int, sys.stdin.readline().rstrip().split())
+    graph[x][y] = 1
+    graph[y][x] = 1
+
+
+
+def dfs(V):
+    DFS_visited[V] = True
+    print(V, end=' ')
+    for i in range(1, N + 1):
+        if not DFS_visited[i] and graph[V][i] == 1:
+            dfs(i)
+
+
+
+def bfs(V):
+    BFS_visited[V] = True
     queue = deque()
-    queue.append((x, y))
+    queue.append(V)
     while queue:
-        x, y = queue.popleft()
-
-        if x == N-1 and y == M-1:
-            break
-
-        if y+1 < M and miro[x][y+1] == 1:
-            queue.append([x, y+1])
-            miro[x][y+1] = miro[x][y] + 1
-        if x+1 < N and miro[x+1][y] == 1:
-            queue.append([x+1, y])
-            miro[x+1][y] = miro[x][y] + 1
-        if y-1 > 0 and miro[x][y-1] == 1:
-            queue.append([x, y-1])
-            miro[x][y-1] = miro[x][y] + 1
-        if x-1 > 0 and miro[x-1][y] == 1:
-            queue.append([x-1, y])
-            miro[x-1][y] = miro[x][y] + 1
-
-    return miro[N-1][M-1]
+        V = queue.popleft()
+        print(V, end=' ')
+        for i in range(1, N + 1):
+            if not BFS_visited[i] and graph[V][i] == 1:
+                queue.append(i)
+                BFS_visited[i] = True
 
 
 
-print(bfs(0, 0))
+dfs(V)
+print()
+bfs(V)
