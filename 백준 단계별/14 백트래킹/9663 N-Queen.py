@@ -5,21 +5,24 @@
 두다가 놓을 수 없으면 뒤로 백트래킹해서 다시 찾기
 
 2. 시간복잡도
+- 중복불가능 : O(n!) (n = 15의 경우 1조 3천억)
+- 문제 시간 제한 10초 : 10 * 2억 -> 20억
 
 3. 자료구조
 N: int;
 cnt: int;
 visited 리스트들: bool[][];
 """
+# 이 문제 pypy3로 안하면 시간초과뜸...
 import sys
-sys.setrecursionlimit(10 ** 6)
+sys.setrecursionlimit(10 ** 4)  # 10 ** 6으로 했더니 메모리 초과남
 
 input = sys.stdin.readline
 
 N = int(input())
-col_visited = [False] * N
-diag_visited1 = [False] * (2 * N - 1)
-diag_visited2 = [False] * (2 * N - 1)
+col_visited = [False] * N               # 열 확인
+diag_visited1 = [False] * (2 * N - 1)   # 대각선 확인
+diag_visited2 = [False] * (2 * N - 1)   # 대각선 확인 2
 
 
 cnt = 0
