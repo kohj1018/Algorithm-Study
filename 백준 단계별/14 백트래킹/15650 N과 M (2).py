@@ -18,16 +18,16 @@ sys.setrecursionlimit(10 ** 6)
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-result = [0]
 
+result = []
 
-def backTracking(num):
-    if num == M:
+def backTracking(v):
+    result.append(v)
+    if len(result)-1 == M:
         print(' '.join(map(str, result[1:])))
         return
-    for i in range(result[num] + 1, N + 1):
-        result.append(i)
-        backTracking(num + 1)
+    for i in range(v+1, N+1):
+        backTracking(i)
         result.pop()
 
 
