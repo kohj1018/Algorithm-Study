@@ -1,16 +1,16 @@
-N, M = map(int, input().split())
+import sys
 
+input = sys.stdin.readline
 
-result = []
+N = int(input())
+size = []
+for _ in range(N):
+    x, y = map(int, input().split())
+    size.append([x, y])
 
-def backTracking(v):
-    result.append(v)
-    if len(result)-1 == M:
-        print(' '.join(map(str, result[1:])))
-        return
-    for i in range(v+1, N+1):
-        backTracking(i)
-        result.pop()
-
-
-backTracking(0)
+for i in range(len(size)):
+    rank = 1
+    for j in range(len(size)):
+        if size[j][0] > size[i][0] and size[j][1] > size[i][1]:
+            rank += 1
+    print(rank, end=' ')
