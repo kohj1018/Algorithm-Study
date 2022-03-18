@@ -10,26 +10,47 @@ N: int;
 cnt: int;
 """
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
 N = int(input())
-cnt = 0
+dp = [[0] * 10 for _ in range(N+1)]
 
-queue = deque()
 for i in range(1, 10):
-    queue.clear()
-    queue.append([i, 1])
-    while queue:
-        popNum, length = queue.popleft()
-        if length == N:
-            cnt += 1
-        for newNum in (popNum-1, popNum+1):
-            if 0<=newNum<10 and length < N:
-                queue.append([newNum, length+1])
+    dp[1][i] = 1
+for i in range(2, N+1):
+    for j in range(10):
+        if j == 0:
+            dp[i][j] = dp[i-1][j+1]
+        elif j == 9:
+            dp[i][j] = dp[i-1][j-1]
+        else:
+            dp[i][j] = dp[i-1][j-1] + dp[i-1][j+1]
+print(sum(dp[N]) % 1000000000)
 
-print(cnt % 1000000000)
+
+
+# import sys
+# from collections import deque
+#
+# input = sys.stdin.readline
+#
+# N = int(input())
+# cnt = 0
+#
+# queue = deque()
+# for i in range(1, 10):
+#     queue.clear()
+#     queue.append([i, 1])
+#     while queue:
+#         popNum, length = queue.popleft()
+#         if length == N:
+#             cnt += 1
+#         for newNum in (popNum-1, popNum+1):
+#             if 0<=newNum<10 and length < N:
+#                 queue.append([newNum, length+1])
+#
+# print(cnt % 1000000000)
 
 
 
